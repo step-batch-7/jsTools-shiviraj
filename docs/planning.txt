@@ -1,64 +1,20 @@
-input possibilities:
---------------------
-1. sort -c filename 
-  output :(no message)
-  error : sort: filename:lineNo: disorder: line content
-    eg : sort: shivam_direction.dtn:2: disorder: MOV A,1
+Planning:
+--------------
 
-2. sort filename
-  output : sorted data of file line wise
-  error : no chance for error
+  sort filename
+  sort 
+  
+  sort -n filename
+  sort -r filename
+  sort -t ' ' -k 2 filename
+  
+  sort -u filename
+  sort -R filename
+  sort -o filename
+  sort -f filename
+  sort -c filename
 
-3. sort 
-  output : take data form stdin and sort all data
-  error : no chance for error
-
-4. sort -t filename
-  error : sort: filename: Invalid argument
-
-5. sort -t ' ' filename => sort filename
-
-6. sort -t ' ' -k filename
-  error : sort: -k filename: Invalid argument 
-
-7. sort -t ' ' -k 2 filename 
-  output : (first it will separate field by given char then sort according to the field   number ) 
-
-8. sort -u filename
-  output: it sort all the field and make uniq the output data
-
-9. sort -R filename 
-  output : sort and separate same lines and display output Randomly
-
-10. sort -o filename
-  output: take input from stdin and write all data in file q
-
-11. sort -f filename 
-  output: ignore the case then sort but lowercase will come last
-
-12. sort -z filename
-  output: no change in input 
-
-13. sort -h filename => sort filename
-
-
-sort 
-sort filename
-sort -z filename
-sort -t ' ' filename
-  Notes: -t takes only single character as separator
-
-sort -t filename
-sort -t ' ' -k filename
-sort -t ' ' -k 2 filename
-
-sort -u filename
-sort -R filename
-sort -o filename
-sort -f filename
-sort -c filename
-
-Planning: 
+Program Flow: 
 -----------------
 [1.1a] : Output (program)
   Output: (print sorted data)

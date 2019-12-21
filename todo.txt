@@ -1,0 +1,24 @@
+Todo:
+--------------
+
+version 0.1
+-------------
+  inputs :
+    node sort.js filename
+    node sort.js
+    
+  install dev dependencies
+    mocha 
+    chai  
+  make directory 
+    src
+    test
+
+  write test 
+  write appTest
+  write program flow of first requirement
+  make sure mocha runs
+  make sure appTest runs
+  
+
+

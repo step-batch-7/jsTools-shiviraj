@@ -1,0 +1,75 @@
+Input Possibilities:
+----------------------
+
+ 1. node sort.js filename
+ 2. node sort.js
+ 3. node sort.js file1 file2  
+ 4. node sort.js -t ' ' -k 2 filename 
+ 5. node sort.js -t ' ' -k 2 file1 file2
+ 6. node sort.js -n filename
+ 7. node sort.js -r filename
+ 8. node sort.js -u filename
+ 9. node sort.js -u file1 file2
+10. node sort.js -R filename
+11. node sort.js -R file1 file2
+12. node sort.js -f filename
+13. node sort.js -f file1 file2
+14. node sort.js -c filename
+15. node sort.js -o filename
+
+Outputs:
+--------------------
+1. node sort.js filename
+  output : sorted data of file line wise
+  error : no chance for error
+
+2. node sort.js 
+  output : take data form stdin and sort all data
+
+3. node sort.js file1 file2
+  Output : take all files data and sort input
+  error : if any file not exits tell error
+
+4. node sort.js -t ' ' -k 2 filename
+  output : (first it will separate field by given char then sort according to the field  number) 
+
+5. node sort.js -t ' ' -k 2 file1 file2
+  output : (first it will separate field by given char then sort according to the field  number) 
+
+6. node sort.js -n filename
+  Output : sort according to the numerical value
+
+7. node sort.js -r filename
+  output : sort in reverse order
+
+8. node sort.js -u filename
+  output: it sort all the field and make uniq the output data
+
+9. node sort.js -u file1 file2
+  output: it sort all the field and make uniq the output data
+
+10. node sort.js -R filename 
+  output : sort it (then separate same lines) and display output Randomly
+
+11. node sort.js -R file1 file2 
+  output : sort it (then separate same lines) and display output Randomly
+
+12. node sort.js -f filename 
+  output: ignore the case then sort (but lowercase will come last)
+
+13. node sort.js -f file1 file2
+  output: ignore the case then sort (but lowercase will come last)
+ 
+14. node sort.js -c filename 
+  output :(no message)
+  error : sort: filename:lineNo: disorder: line content
+    eg : sort: shivam_direction.dtn:2: disorder: MOV A,1
+
+15. node sort.js -o filename
+  output: take input from stdin and write all data in file q
+
+Notes:
+--------------
+node sort.js -z filename 
+node sort.js -h filename
+  both are same as node sort.js filename
