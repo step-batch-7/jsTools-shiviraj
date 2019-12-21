@@ -1,0 +1,115 @@
+input possibilities:
+--------------------
+1. sort -c filename 
+  output :(no message)
+  error : sort: filename:lineNo: disorder: line content
+    eg : sort: shivam_direction.dtn:2: disorder: MOV A,1
+
+2. sort filename
+  output : sorted data of file line wise
+  error : no chance for error
+
+3. sort 
+  output : take data form stdin and sort all data
+  error : no chance for error
+
+4. sort -t filename
+  error : sort: filename: Invalid argument
+
+5. sort -t ' ' filename => sort filename
+
+6. sort -t ' ' -k filename
+  error : sort: -k filename: Invalid argument 
+
+7. sort -t ' ' -k 2 filename 
+  output : (first it will separate field by given char then sort according to the field   number ) 
+
+8. sort -u filename
+  output: it sort all the field and make uniq the output data
+
+9. sort -R filename 
+  output : sort and separate same lines and display output Randomly
+
+10. sort -o filename
+  output: take input from stdin and write all data in file q
+
+11. sort -f filename 
+  output: ignore the case then sort but lowercase will come last
+
+12. sort -z filename
+  output: no change in input 
+
+13. sort -h filename => sort filename
+
+
+sort 
+sort filename
+sort -z filename
+sort -t ' ' filename
+  Notes: -t takes only single character as separator
+
+sort -t filename
+sort -t ' ' -k filename
+sort -t ' ' -k 2 filename
+
+sort -u filename
+sort -R filename
+sort -o filename
+sort -f filename
+sort -c filename
+
+Planning: 
+-----------------
+[1.1a] : Output (program)
+  Output: (print sorted data)
+  Input : Array: Strings
+    ['a','b','c','d']
+  Name : displayResult
+
+[1.1b]: error   
+  Output : (print error)
+  Input : Array
+    ['sort: No such file or directory']
+  Name: displayError
+
+[1.2] : 
+  Output : Array
+    ['a','b','c','d']
+  Process : according to options
+    t => separate the fields
+    k => select field
+    n => sort according to number
+    f => ignore case by sorting time
+    r => reverse sort
+    u => uniq
+    c => check output and loaded contents are same
+            if not same tell where is not same as error 
+    R => random output 
+    o => take input from stdin and write in given file
+  Input : Object
+    {contents :['b','c','a','d'], options:[]}
+  Name: sortContent
+
+[1.3] :
+  Output : Object
+    a => 
+      {contents :['b','c','a','d'], options:[]}
+    b => 
+      ['sort: No such file or directory']
+  Note: 
+    if file is not given,
+      take input from stdin and make array
+    if there is multiple files 
+      load all files contents
+  Input : Object
+    {options: ['-t', ' '], filenames : ['filename']}
+  Name: loadContent
+  
+ 
+[1.4] :
+  Output : Object
+    {options: ['-t', ' '], filenames : ['filename']}
+  Input : array
+    ['-t', ' ', 'filename'];
+  Name: validateOptions
+
