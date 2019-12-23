@@ -1,4 +1,3 @@
-const fs = require('fs');
 const loadContents = function(files, fs) {
   const contents = fs.readFileSync(files, 'utf8');
   return contents.split('\n');
