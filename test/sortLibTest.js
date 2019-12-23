@@ -1,22 +1,28 @@
 const assert = require('chai').assert;
-const { sortContents, loadContents } = require('../src/sortLib');
+const Sort = require('../src/sortLib');
 
-describe('Sort Lib', () => {
-  it('Should sort the contents', () => {
-    const actual = sortContents(['b', 'g', 'A', 'C']);
-    const expected = ['A', 'C', 'b', 'g'];
-    assert.deepStrictEqual(actual, expected);
+const fs = {
+  readFileSync: function(path) {
+    assert.strictEqual(path, 'path');
+    return 's\nn\na\nB';
+  }
+};
+
+describe('Sort', () => {
+  const sort = new Sort();
+
+  describe('load contents', () => {
+    it('Should load the contents of file', () => {
+      const actual = sort.loadContents('path', fs);
+      assert.deepStrictEqual(actual, ['s', 'n', 'a', 'B']);
+    });
   });
 
-  it('Should load the contents', () => {
-    const fs = {
-      readFileSync: function(path) {
-        assert.strictEqual(path, 'path');
-        return 's\nn\na\nB';
-      }
-    };
-    const actual = loadContents('path', fs);
-    const expected = ['s', 'n', 'a', 'B'];
-    assert.deepStrictEqual(actual, expected);
+  describe('sort contents', () => {
+    it('Should sort the contents', () => {
+      sort.loadContents('path', fs);
+      const actual = sort.sortContents();
+      assert.deepStrictEqual(actual, ['B', 'a', 'n', 's']);
+    });
   });
 });

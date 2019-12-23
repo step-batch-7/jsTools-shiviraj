@@ -1,18 +1,15 @@
-const loadContents = function(files, fs) {
-  const contents = fs.readFileSync(files, 'utf8');
-  return contents.split('\n');
-};
+class Sort {
+  constructor() {
+    this.contents = [];
+  }
+  loadContents(files, fs) {
+    this.contents = fs.readFileSync(files, 'utf8');
+    this.contents = this.contents.split('\n');
+    return this.contents;
+  }
+  sortContents() {
+    return this.contents.sort();
+  }
+}
 
-const sortContents = function(contents) {
-  return contents.sort();
-};
-
-const displayError = function(error) {
-  console.error(error.join('\n'));
-};
-
-const displayResult = function(result) {
-  console.log(result.join('\n'));
-};
-
-module.exports = { sortContents, loadContents, displayResult };
+module.exports = Sort;

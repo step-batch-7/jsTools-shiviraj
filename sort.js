@@ -1,11 +1,12 @@
 const fs = require('fs');
-const { loadContents, sortContents, displayResult } = require('./src/sortLib');
+const Sort = require('./src/sortLib');
+const { displayResult, displayError } = require('./src/displayOutput');
 
 const main = function() {
-  const fileName = process.argv[2];
-  const contents = loadContents(fileName, fs);
-  const sortedContents = sortContents(contents);
-  displayResult(contents);
+  const sort = new Sort();
+  sort.loadContents(process.argv[2], fs);
+  const sortedContents = sort.sortContents();
+  displayResult(sortedContents);
 };
 
 main();
