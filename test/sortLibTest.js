@@ -1,5 +1,10 @@
 const assert = require('chai').assert;
-const { sortContents, loadContents } = require('../src/sortLib');
+const {
+  sortContents,
+  loadContents,
+  displayResult,
+  displayError
+} = require('../src/sortLib');
 
 describe('Sort Lib', () => {
   it('Should sort the contents', () => {
