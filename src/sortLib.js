@@ -1,18 +1,22 @@
 const loadContents = function(files, fs) {
-  const contents = fs.readFileSync(files, 'utf8');
-  return contents.split('\n');
+  const fileName = files[0];
+  if (!fs.existsSync(fileName)) {
+    return { msg: ['sort: No such file or directory'], isError: true };
+  }
+  const fileContents = fs.readFileSync(fileName, 'utf8');
+  return { contents: fileContents.split('\n') };
 };
 
-const sortContents = function(contents) {
-  return contents.sort();
+const sortContents = function(content) {
+  return { contents: content.contents.sort() };
 };
 
 const displayError = function(error) {
-  console.error(error.join('\n'));
+  console.error(error.msg.join('\n'));
 };
 
 const displayResult = function(result) {
-  console.log(result.join('\n'));
+  console.log(result.contents.join('\n'));
 };
 
-module.exports = { sortContents, loadContents, displayResult };
+module.exports = { sortContents, loadContents, displayResult, displayError };

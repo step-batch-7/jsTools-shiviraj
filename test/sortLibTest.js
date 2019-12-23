@@ -3,20 +3,38 @@ const { sortContents, loadContents } = require('../src/sortLib');
 
 describe('Sort Lib', () => {
   it('Should sort the contents', () => {
-    const actual = sortContents(['b', 'g', 'A', 'C']);
-    const expected = ['A', 'C', 'b', 'g'];
+    const actual = sortContents({ contents: ['b', 'g', 'A', 'C'] });
+    const expected = { contents: ['A', 'C', 'b', 'g'] };
     assert.deepStrictEqual(actual, expected);
   });
 
-  it('Should load the contents', () => {
-    const fs = {
-      readFileSync: function(path) {
-        assert.strictEqual(path, 'path');
-        return 's\nn\na\nB';
-      }
+  const fs = {
+    readFileSync: function(path) {
+      assert.strictEqual(path, 'path');
+      return 's\nn\na\nB';
+    }
+  };
+
+  it('Should load the contents of file', () => {
+    fs.existsSync = function(path) {
+      assert.strictEqual(path, 'path');
+      return true;
     };
-    const actual = loadContents('path', fs);
-    const expected = ['s', 'n', 'a', 'B'];
+    const actual = loadContents(['path'], fs);
+    const expected = { contents: ['s', 'n', 'a', 'B'] };
+    assert.deepStrictEqual(actual, expected);
+  });
+
+  it('Should give error if file is not exits', () => {
+    fs.existsSync = function(path) {
+      assert.strictEqual(path, 'path');
+      return false;
+    };
+    const actual = loadContents(['path'], fs);
+    const expected = {
+      msg: ['sort: No such file or directory'],
+      isError: true
+    };
     assert.deepStrictEqual(actual, expected);
   });
 });
