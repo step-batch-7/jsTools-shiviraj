@@ -11,12 +11,4 @@ const sortContents = function(content) {
   return { contents: content.contents.sort() };
 };
 
-const displayError = function(error) {
-  console.error(error.msg.join('\n'));
-};
-
-const displayResult = function(result) {
-  console.log(result.contents.join('\n'));
-};
-
-module.exports = { sortContents, loadContents, displayResult, displayError };
+module.exports = { sortContents, loadContents };
