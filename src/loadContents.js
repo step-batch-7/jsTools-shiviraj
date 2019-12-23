@@ -12,8 +12,4 @@ const loadContents = function(files, fs) {
   return files;
 };
 
-const sortContents = function(content) {
-  return { contents: content.contents.sort() };
-};
-
-module.exports = { sortContents, loadContents };
+module.exports = { loadContents };

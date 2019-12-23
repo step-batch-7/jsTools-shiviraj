@@ -1,13 +1,7 @@
 const { assert } = require('chai');
-const { sortContents, loadContents } = require('../src/loadContents');
+const { loadContents } = require('../src/loadContents');
 
 describe('Sort Lib', () => {
-  it('Should sort the contents', () => {
-    const actual = sortContents({ contents: ['b', 'g', 'A', 'C'] });
-    const expected = { contents: ['A', 'C', 'b', 'g'] };
-    assert.deepStrictEqual(actual, expected);
-  });
-
   const fs = {
     readFileSync: function(path) {
       assert.strictEqual(path, 'path');

@@ -1,6 +1,7 @@
 const fs = require('fs');
 const { validateArgs } = require('./validateArgs');
-const { sortContents, loadContents } = require('./loadContents');
+const { sortContents } = require('./sortContents');
+const { loadContents } = require('./loadContents');
 const { displayResult, displayError } = require('./displayOutput');
 
 const showOutput = { result: displayResult, error: displayError };
