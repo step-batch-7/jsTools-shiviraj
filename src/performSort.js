@@ -1,13 +1,15 @@
 const fs = require('fs');
-const { sortContents, loadContents } = require('./sortContents');
+const { validateArgs } = require('./validateArgs');
+const { sortContents, loadContents } = require('./loadContents');
 const { displayResult, displayError } = require('./displayOutput');
 
+const showOutput = { result: displayResult, error: displayError };
+
 const performSort = function(usrArgs) {
-  const showOutput = { result: displayResult, error: displayError };
-  const fileName = usrArgs.slice(2);
-  let contents = loadContents(fileName, fs);
+  const files = validateArgs(usrArgs);
+  let contents = loadContents(files, fs);
   let print = showOutput.error;
-  if (!contents.isError) {
+  if (!contents.error) {
     contents = sortContents(contents);
     print = showOutput.result;
   }

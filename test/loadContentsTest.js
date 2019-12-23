@@ -1,5 +1,5 @@
-const assert = require('chai').assert;
-const { sortContents, loadContents } = require('../src/sortContents');
+const { assert } = require('chai');
+const { sortContents, loadContents } = require('../src/loadContents');
 
 describe('Sort Lib', () => {
   it('Should sort the contents', () => {
@@ -20,7 +20,7 @@ describe('Sort Lib', () => {
       assert.strictEqual(path, 'path');
       return true;
     };
-    const actual = loadContents(['path'], fs);
+    const actual = loadContents({ fileNames: ['path'] }, fs);
     const expected = { contents: ['s', 'n', 'a', 'B'] };
     assert.deepStrictEqual(actual, expected);
   });
@@ -30,11 +30,11 @@ describe('Sort Lib', () => {
       assert.strictEqual(path, 'path');
       return false;
     };
-    const actual = loadContents(['path'], fs);
+    const actual = loadContents({ fileNames: ['path'] }, fs);
     const expected = {
       msg: ['sort: No such file or directory'],
-      isError: true
+      error: true
     };
-    assert.deepStrictEqual(actual, expected);
+    assert.deepEqual(actual, expected);
   });
 });
