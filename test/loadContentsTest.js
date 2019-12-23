@@ -1,7 +1,7 @@
 const { assert } = require('chai');
 const { loadContents } = require('../src/loadContents');
 
-describe('Sort Lib', () => {
+describe('Load Contents', () => {
   const fs = {
     readFileSync: function(path) {
       assert.strictEqual(path, 'path');

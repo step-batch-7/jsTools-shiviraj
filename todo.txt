@@ -19,6 +19,3 @@ version 0.1
   write program flow of first requirement
   make sure mocha runs
   make sure appTest runs
-  
-
-
