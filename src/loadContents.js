@@ -1,9 +1,11 @@
-class Load {
-  constructor(files, fs) {
+class ContentLoader {
+  constructor() {
+    this.contents = [];
+  }
+  initialize(files, fs) {
     this.fs = fs;
     this.data = files;
     this.fileNames = files.fileNames;
-    this.contents = [];
   }
   areAllFilesExists() {
     const result = this.fileNames.filter(file => !this.fs.existsSync(file));
@@ -16,12 +18,19 @@ class Load {
     });
     return this.contents;
   }
-  loadContents() {
-    if (!this.areAllFilesExists())
-      return { msg: ['sort: No such file or directory'], error: true };
+  readAllContents() {
+    if (!this.areAllFilesExists()) {
+      this.data.msg = ['sort: No such file or directory'];
+      this.data.error = true;
+      return this.data;
+    }
     this.data.contents = this.readContents();
     return this.data;
   }
+  loadContents(files, fs) {
+    this.initialize(files, fs);
+    return this.readAllContents();
+  }
 }
 
-module.exports = Load;
+module.exports = ContentLoader;

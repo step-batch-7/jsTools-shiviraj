@@ -10,7 +10,8 @@ const fs = {
 
 describe('Load Contents', () => {
   describe('AreAllFilesExists', () => {
-    const load = new Load({ fileNames: ['path'] }, fs);
+    const load = new Load();
+    load.initialize({ fileNames: ['path'] }, fs);
     it('Should give true if all files are exists', () => {
       fs.existsSync = function(path) {
         assert.strictEqual(path, 'path');
@@ -29,20 +30,21 @@ describe('Load Contents', () => {
   });
 
   describe('ReadContents', () => {
-    const load = new Load({ fileNames: ['path'] }, fs);
+    const load = new Load();
+    load.initialize({ fileNames: ['path'] }, fs);
     it('Should read the contents of file', () => {
       assert.deepStrictEqual(load.readContents(), ['s', 'n', 'a', 'B']);
     });
   });
 
   describe('LoadContents', () => {
-    const load = new Load({ fileNames: ['path'] }, fs);
+    const load = new Load();
     it('Should read the contents of all files', () => {
       fs.existsSync = function(path) {
         assert.strictEqual(path, 'path');
         return true;
       };
-      const actual = load.loadContents().contents;
+      const actual = load.loadContents({ fileNames: ['path'] }, fs).contents;
       assert.deepStrictEqual(actual, ['s', 'n', 'a', 'B']);
     });
 
@@ -51,9 +53,10 @@ describe('Load Contents', () => {
         assert.strictEqual(path, 'path');
         return false;
       };
+      const actual = load.loadContents({ fileNames: ['path'] }, fs);
       const expected = ['sort: No such file or directory'];
-      assert.deepStrictEqual(load.loadContents().msg, expected);
-      assert.isTrue(load.loadContents().error);
+      assert.deepStrictEqual(actual.msg, expected);
+      assert.isTrue(actual.error);
     });
   });
 });
