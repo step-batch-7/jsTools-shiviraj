@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { validateArgs } = require('./validateArgs');
 const { sortContents } = require('./sortContents');
-const { loadContents } = require('./loadContents');
+const Load = require('./loadContents');
 const { displayResult, displayError } = require('./displayOutput');
 const { stdin } = process;
 
@@ -18,11 +18,13 @@ const sortAndDisplay = function(contents) {
 
 const performSort = function(usrArgs) {
   const files = validateArgs(usrArgs);
-  let contents = loadContents(files, fs);
+  const load = new Load(files, fs);
+  let contents = load.loadContents();
 
   if (files.fileNames.length == 0) {
     stdin.on('data', data => {
-      contents.contents.push(data.trim());
+      data = data.trim().split('\n');
+      contents.contents.push(...data);
     });
   }
   if (files.fileNames.length != 0) sortAndDisplay(contents);

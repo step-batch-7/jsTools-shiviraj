@@ -1,15 +1,27 @@
-const loadContents = function(files, fs) {
-  const { fileNames } = files;
-  const contents = [];
-  for (file in fileNames) {
-    if (!fs.existsSync(fileNames[file])) {
-      return { msg: ['sort: No such file or directory'], error: true };
-    }
-    const content = fs.readFileSync(fileNames[file], 'utf8');
-    contents.push(...content.split('\n'));
+class Load {
+  constructor(files, fs) {
+    this.fs = fs;
+    this.data = files;
+    this.fileNames = files.fileNames;
+    this.contents = [];
   }
-  files = { contents };
-  return files;
-};
+  areAllFilesExists() {
+    const result = this.fileNames.filter(file => !this.fs.existsSync(file));
+    return result.length == 0;
+  }
+  readContents() {
+    this.fileNames.map(file => {
+      const content = this.fs.readFileSync(file, 'utf8');
+      this.contents.push(...content.split('\n'));
+    });
+    return this.contents;
+  }
+  loadContents() {
+    if (!this.areAllFilesExists())
+      return { msg: ['sort: No such file or directory'], error: true };
+    this.data.contents = this.readContents();
+    return this.data;
+  }
+}
 
-module.exports = { loadContents };
+module.exports = Load;
