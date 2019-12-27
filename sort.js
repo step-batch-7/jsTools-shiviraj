@@ -1,16 +1,18 @@
 const fs = require('fs');
-const ContentLoader = require('./src/loadContents');
-const { parseUserArgs, sortContents } = require('./src/performSort');
+const {
+  parseUserArgs,
+  loadContents,
+  sortContents
+} = require('./src/performSort');
+const { stdin, stderr, stdout } = process;
 
-const main = function() {
-  const files = parseUserArgs(process.argv);
-  const loadContents = new ContentLoader();
-  let contents = loadContents.loadContents(files, fs);
-  if (contents.error) console.error(contents.msg.join('\n'));
-  if (contents.contents) {
-    contents = sortContents(contents);
-    console.log(contents.contents.join('\n'));
-  }
+const main = () => {
+  const fileNames = parseUserArgs(process.argv);
+  const contents = loadContents(fileNames, fs, stdin);
+  const sortedContents = sortContents(contents);
+  let print = console.log;
+  if (!sortedContents.error) print = console.error;
+  print(sortedContents.content.join('\n'));
 };
 
 main();
