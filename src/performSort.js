@@ -15,9 +15,7 @@ const contentLoader = fs => {
 };
 
 const loadContents = (fileNames, fs) => {
-  const contents = fileNames.reduce(contentLoader(fs), {
-    content: []
-  });
+  const contents = fileNames.reduce(contentLoader(fs), { content: [] });
   if (contents.error) contents.content = ['sort: No such file or directory'];
   return contents;
 };
