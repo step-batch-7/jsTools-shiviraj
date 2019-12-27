@@ -11,7 +11,7 @@ const main = () => {
   const contents = loadContents(fileNames, fs, stdin);
   const sortedContents = sortContents(contents);
   let print = console.log;
-  if (!sortedContents.error) print = console.error;
+  if (sortedContents.error) print = console.error;
   print(sortedContents.content.join('\n'));
 };
 
