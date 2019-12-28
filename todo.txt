@@ -4,8 +4,8 @@ Todo:
 version 0.1
 -------------
   inputs :
-    node sort.js filename
-    node sort.js
+   --done-- node sort.js filename
+   --done-- node sort.js file1 file2
     
   install dev dependencies
     mocha 
@@ -19,3 +19,49 @@ version 0.1
   write program flow of first requirement
   make sure mocha runs
   make sure appTest runs
+
+version 0.1.1
+-------------
+  input :
+    node sort.js 
+    cat file | node sort.js
+  output :
+    take input from stdin then sort and print
+  process :
+    load content by standard input
+  tasks : 
+    How to test stdin
+    write tests
+    write appTest
+
+  
+
+----------------------------
+Planing of current version:
+
+  [1.1] :
+    output : print output 
+      print error or output
+    input : Object 
+      {error : true/false, content}
+    name : displayResult
+
+  [1.2] : 
+    output : Object
+      {error : true/false, content}
+    input : Object
+      {error : true/false, content}
+    Name : sortContents
+
+  [1.3] : 
+    output : Object
+      {error : true/false, content}
+    input : Array
+      [fileNames]
+    name : loadContents 
+
+  [1.4] : 
+    output : Array
+      [fileNames]
+    input : command line Args
+    name : parseUserArgs

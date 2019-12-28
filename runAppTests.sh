@@ -6,7 +6,7 @@ runTest() {
   sed "1d" $test > expected.txt
   #cat expected_output.txt
   eval $command &> output.txt
-  cmp output.txt expected.txt > /dev/null
+  diff -b output.txt expected.txt > /dev/null
   if [ $? -eq 0 ]
   then
     result="✅"

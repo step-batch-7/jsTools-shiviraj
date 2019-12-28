@@ -4,15 +4,18 @@ const {
   loadContents,
   sortContents
 } = require('./src/performSort');
-const { stdin, stderr, stdout } = process;
+const { stdout, stderr } = process;
 
 const main = () => {
   const fileNames = parseUserArgs(process.argv);
-  const contents = loadContents(fileNames, fs, stdin);
+  const contents = loadContents(fileNames, fs);
   const sortedContents = sortContents(contents);
-  let print = console.log;
-  if (sortedContents.error) print = console.error;
-  print(sortedContents.content.join('\n'));
+  const result = sortedContents.content.join('\n');
+  let display = stdout;
+  if (sortedContents.error) {
+    display = stderr;
+  }
+  display.write(result);
 };
 
 main();

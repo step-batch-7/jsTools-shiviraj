@@ -1,5 +1,6 @@
 const parseUserArgs = userArgs => {
-  return userArgs.slice(2);
+  const requiredAfter = 2;
+  return userArgs.slice(requiredAfter);
 };
 
 const contentLoader = fs => {
@@ -16,12 +17,16 @@ const contentLoader = fs => {
 
 const loadContents = (fileNames, fs) => {
   const contents = fileNames.reduce(contentLoader(fs), { content: [] });
-  if (contents.error) contents.content = ['sort: No such file or directory'];
+  if (contents.error) {
+    contents.content = ['sort: No such file or directory'];
+  }
   return contents;
 };
 
 const sortContents = contents => {
-  if (contents.error) return contents;
+  if (contents.error) {
+    return contents;
+  }
   contents.content.sort();
   return contents;
 };

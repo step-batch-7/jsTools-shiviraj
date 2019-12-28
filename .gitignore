@@ -3,3 +3,4 @@ node_modules/
 .nyc_output/
 failures.txt
 planning.txt
+.eslintrc.json

@@ -2,8 +2,7 @@ const { assert } = require('chai');
 const {
   parseUserArgs,
   loadContents,
-  sortContents,
-  displayResult
+  sortContents
 } = require('../src/performSort');
 describe('Perform Sort', () => {
   describe('Parse User Args', () => {
