@@ -1,0 +1,2 @@
+node sort.js badFile.js
+sort: No such file or directory

@@ -65,3 +65,6 @@ Planing of current version:
       [fileNames]
     input : command line Args
     name : parseUserArgs
+
+-------------------
+replace sync read to async read

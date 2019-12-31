@@ -1,0 +1,4 @@
+node sort.js appTests/sample.txt
+hello
+hi
+how are you
