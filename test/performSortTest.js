@@ -1,81 +1,45 @@
 const { assert } = require('chai');
-const {
-  parseUserArgs,
-  loadContents,
-  sortContents
-} = require('../src/performSort');
+const sinon = require('sinon');
+const { parseUserArgs, performSort } = require('../src/performSort');
+const loadLines = require('../src/loadLines');
+
 describe('Perform Sort', () => {
   describe('Parse User Args', () => {
     it('should parse the user Args ', () => {
       const actual = parseUserArgs(['node', 'sort.js', 'sample.txt']);
-      assert.deepStrictEqual(actual, ['sample.txt']);
+      assert.deepStrictEqual(actual, { fileName: 'sample.txt' });
     });
 
     it('should parse the user Args if no file is given ', () => {
       const actual = parseUserArgs(['node', 'sort.js']);
-      assert.deepStrictEqual(actual, []);
+      assert.deepStrictEqual(actual, { fileName: undefined });
     });
   });
 
-  describe('Load Contents', () => {
-    it('Should load the contents of file', () => {
-      const fs = {
-        readFileSync: path => {
-          assert.equal(path, 'path');
-          return '1\n2\n3\n4\n5';
-        },
-        existsSync: path => {
-          assert.equal(path, 'path');
-          return true;
-        }
-      };
-      const actual = loadContents(['path'], fs);
-      const expected = { content: ['1', '2', '3', '4', '5'] };
-      assert.deepStrictEqual(actual, expected);
+  describe('perform sort', () => {
+    beforeEach(() => {
+      sinon.replace(loadLines, 'byStream', sinon.fake());
     });
 
-    it('Should load the contents of multiple file', () => {
-      const fs = {
-        readFileSync: path => {
-          assert.equal(path, 'path');
-          return '1\n2';
-        },
-        existsSync: path => {
-          assert.equal(path, 'path');
-          return true;
-        }
-      };
-      const actual = loadContents(['path', 'path'], fs);
-      const expected = { content: ['1', '2', '1', '2'] };
-      assert.deepStrictEqual(actual, expected);
+    afterEach(() => {
+      sinon.restore();
     });
 
-    it('Should tell error if file is not exists', () => {
-      const fs = {
-        existsSync: path => {
-          assert.equal(path, 'path');
-          return false;
-        }
-      };
-      const actual = loadContents(['path'], fs);
-      assert.deepStrictEqual(actual, {
-        error: true,
-        content: ['sort: No such file or directory']
-      });
-    });
-  });
-
-  describe('Sort Contents', () => {
-    it('should sort the given contents', () => {
-      const actual = sortContents({ content: ['a', 'S', 'A'] });
-      const expected = { content: ['A', 'S', 'a'] };
-      assert.deepStrictEqual(actual, expected);
+    it('should call loadLines by fileInputStream if file is given', () => {
+      const stream = { setEncoding: sinon.fake(), on: sinon.fake() };
+      const createReadStream = sinon.fake.returns(stream);
+      const stdin = {};
+      performSort('file.txt', { createReadStream, stdin }, sinon.fake());
+      assert(createReadStream.firstCall.calledWith('file.txt'));
+      assert(loadLines.byStream.firstCall.calledWith(stream));
     });
 
-    it('should not sort the contents it has error', () => {
-      const actual = sortContents({ error: true, content: ['a', 'S', 'A'] });
-      const expected = { error: true, content: ['a', 'S', 'A'] };
-      assert.deepStrictEqual(actual, expected);
+    it('should call loadLines by stdinStream if file is not given', () => {
+      const stream = { setEncoding: sinon.fake(), on: sinon.fake() };
+      const createReadStream = sinon.fake.returns(stream);
+      const stdin = { setEncoding: sinon.fake(), on: sinon.fake() };
+      performSort(undefined, { createReadStream, stdin }, sinon.fake());
+      assert(loadLines.byStream.firstCall.calledWith(stdin));
     });
   });
 });

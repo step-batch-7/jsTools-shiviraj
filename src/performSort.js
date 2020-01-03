@@ -1,34 +1,20 @@
+const loadLines = require('./loadLines');
+
 const parseUserArgs = userArgs => {
-  const requiredAfter = 2;
-  return userArgs.slice(requiredAfter);
+  const [, , fileName] = userArgs;
+  return { fileName };
 };
 
-const contentLoader = fs => {
-  return (wholeContents, file) => {
-    if (!fs.existsSync(file)) {
-      wholeContents.error = true;
-      return wholeContents;
+const performSort = (fileName, { createReadStream, stdin }, display) => {
+  const inputStream = fileName ? createReadStream(fileName) : stdin;
+  const onFinish = ({ lines, errorMsg }) => {
+    let result = { errorMsg };
+    if (!errorMsg) {
+      result = { content: lines.sort().join('\n') };
     }
-    const fileContent = fs.readFileSync(file, 'utf8');
-    wholeContents.content.push(...fileContent.split('\n'));
-    return wholeContents;
+    display(result);
   };
+  loadLines.byStream(inputStream, onFinish);
 };
 
-const loadContents = (fileNames, fs) => {
-  const contents = fileNames.reduce(contentLoader(fs), { content: [] });
-  if (contents.error) {
-    contents.content = ['sort: No such file or directory'];
-  }
-  return contents;
-};
-
-const sortContents = contents => {
-  if (contents.error) {
-    return contents;
-  }
-  contents.content.sort();
-  return contents;
-};
-
-module.exports = { parseUserArgs, loadContents, sortContents };
+module.exports = { parseUserArgs, performSort };

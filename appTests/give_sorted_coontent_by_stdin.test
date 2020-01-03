@@ -1,0 +1,4 @@
+cat appTests/sample.txt | node sort.js
+hello
+hi
+how are you
