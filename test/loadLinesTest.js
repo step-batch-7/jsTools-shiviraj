@@ -3,7 +3,6 @@ const assert = require('chai').assert;
 const {byStream} = require('../src/loadLines');
 
 describe('Load Lines', () => {
-  // eslint-disable-next-line max-statements
   it('should load lines by stream and send to callBack', done => {
     const readStream = {on: sinon.fake()};
     const callBack = sinon.fake();
