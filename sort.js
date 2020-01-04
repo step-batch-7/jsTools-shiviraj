@@ -1,5 +1,5 @@
-const { createReadStream } = require('fs');
-const { parseUserArgs, performSort } = require('./src/performSort');
+const {createReadStream} = require('fs');
+const {parseUserArgs, performSort} = require('./src/performSort');
 
 const display = data => {
   if (!data.errorMsg) {
@@ -10,9 +10,8 @@ const display = data => {
 };
 
 const main = () => {
-  const { fileName } = parseUserArgs(process.argv);
-  const contentLoader = { createReadStream, stdin: process.stdin };
-  performSort(fileName, contentLoader, display);
+  const {fileName} = parseUserArgs(process.argv);
+  performSort(fileName, createReadStream, process.stdin, display);
 };
 
 main();

@@ -1,18 +1,18 @@
-const { assert } = require('chai');
+const {assert} = require('chai');
 const sinon = require('sinon');
-const { parseUserArgs, performSort } = require('../src/performSort');
+const {parseUserArgs, performSort} = require('../src/performSort');
 const loadLines = require('../src/loadLines');
 
 describe('Perform Sort', () => {
   describe('Parse User Args', () => {
     it('should parse the user Args ', () => {
       const actual = parseUserArgs(['node', 'sort.js', 'sample.txt']);
-      assert.deepStrictEqual(actual, { fileName: 'sample.txt' });
+      assert.deepStrictEqual(actual, {fileName: 'sample.txt'});
     });
 
     it('should parse the user Args if no file is given ', () => {
       const actual = parseUserArgs(['node', 'sort.js']);
-      assert.deepStrictEqual(actual, { fileName: undefined });
+      assert.deepStrictEqual(actual, {fileName: undefined});
     });
   });
 
@@ -26,19 +26,19 @@ describe('Perform Sort', () => {
     });
 
     it('should call loadLines by fileInputStream if file is given', () => {
-      const stream = { setEncoding: sinon.fake(), on: sinon.fake() };
+      const stream = {setEncoding: sinon.fake(), on: sinon.fake()};
       const createReadStream = sinon.fake.returns(stream);
       const stdin = {};
-      performSort('file.txt', { createReadStream, stdin }, sinon.fake());
+      performSort('file.txt', createReadStream, stdin, sinon.fake());
       assert(createReadStream.firstCall.calledWith('file.txt'));
       assert(loadLines.byStream.firstCall.calledWith(stream));
     });
 
     it('should call loadLines by stdinStream if file is not given', () => {
-      const stream = { setEncoding: sinon.fake(), on: sinon.fake() };
+      const stream = {setEncoding: sinon.fake(), on: sinon.fake()};
       const createReadStream = sinon.fake.returns(stream);
-      const stdin = { setEncoding: sinon.fake(), on: sinon.fake() };
-      performSort(undefined, { createReadStream, stdin }, sinon.fake());
+      const stdin = {setEncoding: sinon.fake(), on: sinon.fake()};
+      performSort(undefined, createReadStream, stdin, sinon.fake());
       assert(loadLines.byStream.firstCall.calledWith(stdin));
     });
   });

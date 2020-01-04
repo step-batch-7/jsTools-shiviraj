@@ -1,7 +1,7 @@
 const byStream = (readStream, onFinish) => {
   let content = '';
   readStream.on('error', () => {
-    onFinish({ errorMsg: 'sort: No such file or directory' });
+    onFinish({errorMsg: 'sort: No such file or directory'});
   });
 
   readStream.on('data', data => {
@@ -9,8 +9,8 @@ const byStream = (readStream, onFinish) => {
   });
 
   readStream.on('end', () => {
-    onFinish({ lines: content.split('\n') });
+    onFinish({lines: content.split('\n')});
   });
 };
 
-module.exports = { byStream };
+module.exports = {byStream};
