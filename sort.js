@@ -1,5 +1,6 @@
 const {createReadStream} = require('fs');
 const {parseUserArgs, performSort} = require('./src/performSort');
+const StreamPicker = require('./src/streamPicker');
 
 const display = data => {
   if (!data.errorMsg) {
@@ -11,7 +12,8 @@ const display = data => {
 
 const main = () => {
   const {fileName} = parseUserArgs(process.argv);
-  performSort(fileName, createReadStream, process.stdin, display);
+  const streamPicker = new StreamPicker(createReadStream, process.stdin);
+  performSort(fileName, streamPicker, display);
 };
 
 main();

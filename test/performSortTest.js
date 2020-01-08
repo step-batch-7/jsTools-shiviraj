@@ -27,18 +27,15 @@ describe('Perform Sort', () => {
 
     it('should call loadLines by fileInputStream if file is given', () => {
       const stream = {setEncoding: sinon.fake(), on: sinon.fake()};
-      const createReadStream = sinon.fake.returns(stream);
-      const stdin = {};
-      performSort('file.txt', createReadStream, stdin, sinon.fake());
-      assert(createReadStream.firstCall.calledWith('file.txt'));
+      const streamPicker = {pick: sinon.fake.returns(stream)};
+      performSort('file.txt', streamPicker, sinon.fake());
       assert(loadLines.byStream.firstCall.calledWith(stream));
     });
 
     it('should call loadLines by stdinStream if file is not given', () => {
-      const stream = {setEncoding: sinon.fake(), on: sinon.fake()};
-      const createReadStream = sinon.fake.returns(stream);
       const stdin = {setEncoding: sinon.fake(), on: sinon.fake()};
-      performSort(undefined, createReadStream, stdin, sinon.fake());
+      const streamPicker = {pick: sinon.fake.returns(stdin)};
+      performSort(undefined, streamPicker, sinon.fake());
       assert(loadLines.byStream.firstCall.calledWith(stdin));
     });
   });

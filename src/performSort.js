@@ -5,8 +5,8 @@ const parseUserArgs = userArgs => {
   return {fileName};
 };
 
-const performSort = (fileName, createReadStream, stdin, display) => {
-  const inputStream = fileName ? createReadStream(fileName) : stdin;
+const performSort = (fileName, streamPicker, display) => {
+  const inputStream = streamPicker.pick(fileName);
   const onFinish = ({lines, errorMsg}) => {
     let result = {errorMsg};
     if (!errorMsg) {
